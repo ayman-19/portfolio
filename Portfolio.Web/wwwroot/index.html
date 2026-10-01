@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>My Portfolio</title>
+    <!-- Fonts & Icons -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="layout-container">
+        <!-- Hero Section -->
+        <section id="personal-info-section" class="hero">
+            <div class="loader" id="personal-loader"></div>
+            <div class="hero-wrapper hidden" id="personal-content">
+                <div class="hero-image-box">
+                    <img id="pi-photo" src="https://via.placeholder.com/250" alt="Profile">
+                </div>
+                <div class="hero-details">
+                    <h1 id="pi-name">Loading...</h1>
+                    <h2 id="pi-jobtitle">Loading...</h2>
+                    <p id="pi-summary" class="hero-summary"></p>
+                    
+                    <div class="hero-meta">
+                        <div id="pi-location" class="meta-item"><i class="fas fa-map-marker-alt"></i> <span id="pi-city"></span>, <span id="pi-country"></span></div>
+                        <div id="pi-email" class="meta-item"><i class="fas fa-envelope"></i> <span></span></div>
+                        <div id="pi-phone" class="meta-item"><i class="fas fa-phone"></i> <span></span></div>
+                    </div>
+
+                    <div class="hero-links">
+                        <a id="pi-github" href="#" target="_blank" class="btn btn-outline hidden"><i class="fab fa-github"></i> GitHub</a>
+                        <a id="pi-linkedin" href="#" target="_blank" class="btn btn-outline hidden"><i class="fab fa-linkedin"></i> LinkedIn</a>
+                        <a id="pi-cv" href="#" target="_blank" class="btn btn-primary hidden"><i class="fas fa-download"></i> Download CV</a>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Experience Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-briefcase"></i> Experience</h2>
+                <div class="header-line"></div>
+            </div>
+            <div class="loader" id="exp-loader"></div>
+            <div class="timeline-container" id="experience-list">
+                <!-- Dynamic Experience Items -->
+            </div>
+        </section>
+
+        <!-- Education Section -->
+        <section class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                <div class="header-line"></div>
+            </div>
+            <div class="loader" id="edu-loader"></div>
+            <div class="timeline-container" id="education-list">
+                <!-- Dynamic Education Items -->
+            </div>
+        </section>
+
+        <!-- Skills Section (Last) -->
+        <section class="section">
+            <div class="section-header">
+                <h2><i class="fas fa-star"></i> Skills</h2>
+                <div class="header-line"></div>
+            </div>
+            <div class="loader" id="skills-loader"></div>
+            <div class="skills-grid" id="skills-list">
+                <!-- Dynamic Skills -->
+            </div>
+        </section>
+
+        <footer>
+            <p>&copy; <span id="current-year"></span>. Crafted carefully.</p>
+        </footer>
+    </div>
+
+    <script src="js/app.js"></script>
+</body>
+</html>

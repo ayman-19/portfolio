@@ -23,6 +23,18 @@ builder.Services.AddScoped<ISkillService, SkillService>();
 
 var app = builder.Build();
 
+app.Use(async (context, next) =>
+{
+    try
+    {
+        await next();
+    }
+    catch (OperationCanceledException)
+    {
+        context.Response.StatusCode = 499; 
+    }
+});
+
 if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
@@ -30,6 +42,9 @@ if (app.Environment.IsDevelopment())
 }
 
 app.UseHttpsRedirection();
+
+app.UseDefaultFiles();
+app.UseStaticFiles();
 
 app.UseAuthorization();
 
