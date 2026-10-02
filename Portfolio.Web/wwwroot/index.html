@@ -12,21 +12,28 @@
     <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
+    <!-- Animated Background Gradients -->
+    <div class="bg-glow glow-1"></div>
+    <div class="bg-glow glow-2"></div>
+    <div class="bg-glow glow-3"></div>
+
     <div class="layout-container">
         <!-- Hero Section -->
-        <section id="personal-info-section" class="hero">
+        <section id="personal-info-section" class="hero reveal">
             <div class="loader" id="personal-loader"></div>
             <div class="hero-wrapper hidden" id="personal-content">
                 <div class="hero-image-box">
-                    <img id="pi-photo" src="https://via.placeholder.com/250" alt="Profile">
+                    <div class="image-border">
+                        <img id="pi-photo" src="https://via.placeholder.com/250" alt="Profile">
+                    </div>
                 </div>
                 <div class="hero-details">
-                    <h1 id="pi-name">Loading...</h1>
+                    <h1 id="pi-name" class="gradient-text">Loading...</h1>
                     <h2 id="pi-jobtitle">Loading...</h2>
                     <p id="pi-summary" class="hero-summary"></p>
                     
                     <div class="hero-meta">
-                        <div id="pi-location" class="meta-item"><i class="fas fa-map-marker-alt"></i> <span id="pi-city"></span>, <span id="pi-country"></span></div>
+                        <div id="pi-location" class="meta-item"><i class="fas fa-map-marker-alt"></i><span id="pi-city"></span><span id="pi-country"></span></div>
                         <div id="pi-email" class="meta-item"><i class="fas fa-envelope"></i> <span></span></div>
                         <div id="pi-phone" class="meta-item"><i class="fas fa-phone"></i> <span></span></div>
                     </div>
@@ -34,16 +41,18 @@
                     <div class="hero-links">
                         <a id="pi-github" href="#" target="_blank" class="btn btn-outline hidden"><i class="fab fa-github"></i> GitHub</a>
                         <a id="pi-linkedin" href="#" target="_blank" class="btn btn-outline hidden"><i class="fab fa-linkedin"></i> LinkedIn</a>
-                        <a id="pi-cv" href="#" target="_blank" class="btn btn-primary hidden"><i class="fas fa-download"></i> Download CV</a>
+                        <a id="pi-cv" href="#" target="_blank" class="btn btn-primary hidden">
+                            <span><i class="fas fa-download"></i> Download CV</span>
+                        </a>
                     </div>
                 </div>
             </div>
         </section>
 
         <!-- Experience Section -->
-        <section class="section">
+        <section class="section reveal">
             <div class="section-header">
-                <h2><i class="fas fa-briefcase"></i> Experience</h2>
+                <h2 class="gradient-text"><i class="fas fa-briefcase"></i> Experience</h2>
                 <div class="header-line"></div>
             </div>
             <div class="loader" id="exp-loader"></div>
@@ -53,9 +62,9 @@
         </section>
 
         <!-- Education Section -->
-        <section class="section">
+        <section class="section reveal">
             <div class="section-header">
-                <h2><i class="fas fa-graduation-cap"></i> Education</h2>
+                <h2 class="gradient-text"><i class="fas fa-graduation-cap"></i> Education</h2>
                 <div class="header-line"></div>
             </div>
             <div class="loader" id="edu-loader"></div>
@@ -65,9 +74,9 @@
         </section>
 
         <!-- Skills Section (Last) -->
-        <section class="section">
+        <section class="section reveal">
             <div class="section-header">
-                <h2><i class="fas fa-star"></i> Skills</h2>
+                <h2 class="gradient-text"><i class="fas fa-star"></i> Skills</h2>
                 <div class="header-line"></div>
             </div>
             <div class="loader" id="skills-loader"></div>
@@ -77,7 +86,7 @@
         </section>
 
         <footer>
-            <p>&copy; <span id="current-year"></span>. Crafted carefully.</p>
+            <p>&copy; <span id="current-year"></span>. Crafted with Passion.</p>
         </footer>
     </div>
 

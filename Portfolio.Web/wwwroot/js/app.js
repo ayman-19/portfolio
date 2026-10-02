@@ -5,7 +5,43 @@ document.addEventListener('DOMContentLoaded', () => {
     fetchExperience();
     fetchSkills();
     fetchEducation();
+
+    // Setup Scroll Reveal Animation
+    setupScrollReveal();
 });
+
+function setupScrollReveal() {
+    const reveals = document.querySelectorAll('.reveal');
+    
+    // Create an intersection observer
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+                // Optional: Stop observing once revealed
+                // observer.unobserve(entry.target);
+            }
+        });
+    }, {
+        threshold: 0.1, // Trigger when 10% of element is visible
+        rootMargin: "0px 0px -50px 0px"
+    });
+
+    reveals.forEach(reveal => {
+        observer.observe(reveal);
+    });
+
+    // Manually trigger once on load to reveal elements already in viewport
+    setTimeout(() => {
+        reveals.forEach(reveal => {
+            const windowHeight = window.innerHeight;
+            const elementTop = reveal.getBoundingClientRect().top;
+            if (elementTop < windowHeight - 50) {
+                reveal.classList.add('active');
+            }
+        });
+    }, 100);
+}
 
 function formatDate(dateString) {
     if (!dateString) return 'Present';
@@ -43,7 +79,7 @@ async function fetchPersonalInfo() {
             }
             
             if (info.city || info.country) {
-                document.getElementById('pi-city').textContent = info.city || '';
+                document.getElementById('pi-city').textContent = info.city ? `${info.city},` : '';
                 document.getElementById('pi-country').textContent = info.country || '';
             } else {
                 document.getElementById('pi-location').style.display = 'none';
@@ -52,7 +88,8 @@ async function fetchPersonalInfo() {
             if (info.photoUrl) {
                 document.getElementById('pi-photo').src = info.photoUrl;
             } else {
-                document.getElementById('pi-photo').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(info.fullName)}&background=f1f5f9&color=0f172a&size=250`;
+                // Dark theme avatar
+                document.getElementById('pi-photo').src = `https://ui-avatars.com/api/?name=${encodeURIComponent(info.fullName)}&background=12141d&color=f8fafc&size=300`;
             }
 
             if (info.gitHubUrl) {
@@ -91,7 +128,7 @@ async function fetchExperience() {
             
             const experiences = data.value.sort((a, b) => new Date(b.startDate) - new Date(a.startDate));
             
-            experiences.forEach(exp => {
+            experiences.forEach((exp, index) => {
                 const start = formatDate(exp.startDate);
                 const end = formatDate(exp.endDate);
                 
@@ -103,7 +140,8 @@ async function fetchExperience() {
                 }
 
                 const item = document.createElement('div');
-                item.className = 'timeline-card';
+                item.className = 'timeline-card reveal';
+                item.style.transitionDelay = `${index * 0.1}s`; // Staggered animation
                 item.innerHTML = `
                     <div class="timeline-date-box">
                         ${start} <br>to<br> ${end}
@@ -115,9 +153,12 @@ async function fetchExperience() {
                     </div>
                 `;
                 list.appendChild(item);
+                
+                // Observe dynamically added item
+                setupDynamicReveal(item);
             });
         } else {
-            document.getElementById('experience-list').innerHTML = '<p class="text-muted">No experience entries found.</p>';
+            document.getElementById('experience-list').innerHTML = '<p class="hero-summary" style="text-align:center;">No experience entries found.</p>';
         }
     } catch (error) {
         console.error('Error fetching experience:', error);
@@ -126,15 +167,11 @@ async function fetchExperience() {
 }
 
 function getStarsHtml(level) {
-    // Determine the rating from 1 to 5 based on what was saved in the DB.
-    // If user input values like 1,2,3,4,5 in the DB, use it directly.
-    // If user input values like 20,40,60,80,100, divide by 20.
     let score = level;
     if (level > 5) {
         score = Math.round(level / 20);
     }
     
-    // Fallback to 1 if something is weird
     if (score < 1) score = 1;
     if (score > 5) score = 5;
 
@@ -159,9 +196,10 @@ async function fetchSkills() {
         if (data.isSuccess && data.value && data.value.length > 0) {
             const list = document.getElementById('skills-list');
             
-            data.value.forEach(skill => {
+            data.value.forEach((skill, index) => {
                 const item = document.createElement('div');
-                item.className = 'skill-box';
+                item.className = 'skill-box reveal';
+                item.style.transitionDelay = `${index * 0.05}s`; // Staggered animation
                 item.innerHTML = `
                     <span class="name">${skill.name}</span>
                     <div class="stars">
@@ -169,9 +207,11 @@ async function fetchSkills() {
                     </div>
                 `;
                 list.appendChild(item);
+                
+                setupDynamicReveal(item);
             });
         } else {
-            document.getElementById('skills-list').innerHTML = '<p class="text-muted">No skills found.</p>';
+            document.getElementById('skills-list').innerHTML = '<p class="hero-summary" style="text-align:center; grid-column: 1/-1;">No skills found.</p>';
         }
     } catch (error) {
         console.error('Error fetching skills:', error);
@@ -194,7 +234,7 @@ async function fetchEducation() {
             const end = formatDate(edu.endDate);
             
             const item = document.createElement('div');
-            item.className = 'timeline-card';
+            item.className = 'timeline-card reveal';
             item.innerHTML = `
                 <div class="timeline-date-box">
                     ${start} <br>to<br> ${end}
@@ -202,16 +242,28 @@ async function fetchEducation() {
                 <div class="timeline-content-box">
                     <h3>${edu.degree} ${edu.fieldOfStudy ? `in ${edu.fieldOfStudy}` : ''}</h3>
                     <h4>${edu.institution}</h4>
-                    ${edu.grade ? `<p><strong>Grade:</strong> ${edu.grade}</p>` : ''}
+                    ${edu.grade ? `<p><strong>Grade:</strong> <span style="color:var(--text-main)">${edu.grade}</span></p>` : ''}
                     ${edu.description ? `<p>${edu.description}</p>` : ''}
                 </div>
             `;
             list.appendChild(item);
+            setupDynamicReveal(item);
         } else {
-             document.getElementById('education-list').innerHTML = '<p class="text-muted">No education details found.</p>';
+             document.getElementById('education-list').innerHTML = '<p class="hero-summary" style="text-align:center;">No education details found.</p>';
         }
     } catch (error) {
         console.error('Error fetching education:', error);
         document.getElementById('edu-loader').classList.add('hidden');
     }
+}
+
+function setupDynamicReveal(element) {
+    const observer = new IntersectionObserver((entries) => {
+        entries.forEach(entry => {
+            if (entry.isIntersecting) {
+                entry.target.classList.add('active');
+            }
+        });
+    }, { threshold: 0.1, rootMargin: "0px 0px -50px 0px" });
+    observer.observe(element);
 }
